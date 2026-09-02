@@ -34,7 +34,7 @@ SOURCES = [
     # ---------------- West Bengal (highest priority) ----------------
     {
         "name": "WBHRB (WB Health Recruitment Board)",
-        "url": "https://wbhrb.in",
+        "url": "https://www.hrb.wb.gov.in",
         "state": "West Bengal",
         "district": None,
         "base_priority": 100,
@@ -82,7 +82,7 @@ SOURCES = [
     # ---------------- Central Government ----------------
     {
         "name": "SSC (Staff Selection Commission)",
-        "url": "https://ssc.nic.in",
+        "url": "https://ssc.gov.in/home/notice-board",
         "state": "Central",
         "district": None,
         "base_priority": 60,
