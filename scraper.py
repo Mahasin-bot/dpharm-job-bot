@@ -9,10 +9,14 @@
 # If a specific source needs custom handling later, add a function named
 # scrape_<something>(html, source) and call it from scrape_source() below.
 
+import logging
 import requests
 from bs4 import BeautifulSoup
 
 from filters import is_relevant, extract_last_date, compute_priority, priority_label
+
+log = logging.getLogger("dpharm-bot.scraper")
+
 
 HEADERS = {
     "User-Agent": (
@@ -60,6 +64,7 @@ def scrape_source(source: dict):
     try:
         html = fetch(source["url"])
     except Exception as e:
+        log.warning(f"[{source['name']}] FAILED to fetch {source['url']}: {e}")
         return [{
             "error": True,
             "source": source["name"],
@@ -69,10 +74,13 @@ def scrape_source(source: dict):
     soup = BeautifulSoup(html, "lxml")
 
     candidates = _rows_from_tables(soup)
+    candidate_type = "table rows"
     if not candidates:
         candidates = _rows_from_lists(soup)
+        candidate_type = "list links"
 
     seen_texts = set()
+    relevant_count = 0
     for text, link in candidates:
         if text in seen_texts:
             continue
@@ -80,6 +88,7 @@ def scrape_source(source: dict):
 
         if not is_relevant(text):
             continue
+        relevant_count += 1
 
         if link and not link.startswith("http"):
             base = source["url"].rstrip("/")
@@ -98,6 +107,11 @@ def scrape_source(source: dict):
             "priority_score": priority_score,
             "priority_label": priority_label(priority_score),
         })
+
+    log.info(
+        f"[{source['name']}] fetched OK - {len(candidates)} {candidate_type} scanned, "
+        f"{relevant_count} matched D.Pharm/Pharmacist keywords"
+    )
 
     return results
 
