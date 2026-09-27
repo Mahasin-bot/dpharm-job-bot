@@ -41,7 +41,7 @@ SOURCES = [
     },
     {
         "name": "WBPSC (WB Public Service Commission)",
-        "url": "https://wbpsc.gov.in",
+        "url": "https://psc.wb.gov.in",
         "state": "West Bengal",
         "district": None,
         "base_priority": 95,
@@ -70,10 +70,18 @@ SOURCES = [
         "district": "Uttar Dinajpur",
         "base_priority": 90,
     },
-    # Example placeholder for adding more districts later:
+    {
+        "name": "DHFWS Murshidabad (District Health Society)",
+        "url": "https://murshidabad.gov.in/notice_category/recruitment/",
+        "state": "West Bengal",
+        "district": "Murshidabad",
+        "base_priority": 90,
+    },
+    # Example placeholder for adding more districts later (most WB district
+    # sites follow this same URL pattern: https://<district>.gov.in/notice_category/recruitment/):
     # {
     #     "name": "Purba Bardhaman District Health Society",
-    #     "url": "https://<confirm-actual-url>",
+    #     "url": "https://purbabardhaman.gov.in/notice_category/recruitment/",
     #     "state": "West Bengal",
     #     "district": "Purba Bardhaman",
     #     "base_priority": 85,
